@@ -31,9 +31,9 @@ export default function Comparison() {
       <div ref={ref} className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className={`reveal ${visible ? 'is-visible' : ''} mb-16`}>
           <p className="editorial-eyebrow mb-5">Product Comparison</p>
-          <h2 className="font-serif text-display-2 font-light text-charcoal-900">
+          <h2 style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }} className="text-display-2 font-bold text-charcoal-900 tracking-tight leading-none">
             COMPARE BEFORE<br />
-            <span className="italic font-extralight text-sage-600">YOU BUY.</span>
+            <span style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }} className="italic font-normal text-sage-600">YOU BUY.</span>
           </h2>
         </div>
 

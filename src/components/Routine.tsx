@@ -14,9 +14,9 @@ export default function Routine() {
             <div className="h-px w-8 bg-sage-400/50" />
             <p className="editorial-eyebrow">Personalized Routine</p>
           </div>
-          <h2 className="font-serif text-display-2 font-light text-charcoal-900">
+          <h2 style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }} className="text-display-2 font-bold text-charcoal-900 tracking-tight leading-none">
             BUILT AROUND<br />
-            <span className="italic font-extralight text-sage-600">YOUR SKIN.</span>
+            <span style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }} className="italic font-normal text-sage-600">YOUR SKIN.</span>
           </h2>
         </div>
 

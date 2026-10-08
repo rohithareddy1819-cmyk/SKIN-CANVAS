@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import LoginPage from '@/components/LoginPage';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import HowItWorks from '@/components/HowItWorks';
@@ -15,8 +17,18 @@ import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={() => setIsLoggedIn(true)} />;
+  }
+
   return (
-    <div className="min-h-screen bg-ivory-50">
+    <div
+      className="min-h-screen bg-ivory-50"
+      style={{ animation: 'fadeInPage 0.6s ease forwards' }}
+    >
+      <style>{`@keyframes fadeInPage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <Navbar />
       <main>
         <Hero />

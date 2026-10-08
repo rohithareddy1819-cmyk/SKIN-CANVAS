@@ -229,6 +229,7 @@ export default function SkinAnalysis() {
 
               {/* Photo Display Card */}
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl sm:rounded-2xl bg-zinc-950">
+                {/* Photo Image */}
                 <img
                   src={selectedPhoto}
                   alt="Biometric Facial Analysis"
@@ -240,20 +241,47 @@ export default function SkinAnalysis() {
                 {/* Scanning Laser Line */}
                 {isScanning && (
                   <div
-                    className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_20px_#22d3ee] pointer-events-none transition-all"
+                    className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_20px_#22d3ee] pointer-events-none transition-all z-20"
                     style={{ top: `${scanProgress}%` }}
                   >
                     <div className="absolute inset-x-0 -top-12 h-12 bg-gradient-to-b from-transparent to-cyan-500/20" />
                   </div>
                 )}
 
-                {/* Dynamic/Interactive Biometric Facial Nodes */}
+                {/* Interactive Hotspots / Dynamic Badges */}
                 {DIAGNOSTICS.filter(d => d.dotPos).map((pt) => {
                   const isHovered = hoveredPoint === pt.id;
+                  const isDefaultPhoto = selectedPhoto.includes('analyzed');
+
+                  if (isDefaultPhoto) {
+                    // For the 2nd photo (which already has crisp labels rendered), overlay glowing interactive hover hotspot
+                    return (
+                      <div
+                        key={pt.id}
+                        className="absolute cursor-pointer z-10 -translate-x-1/2 -translate-y-1/2"
+                        style={{
+                          left: `${pt.dotPos!.x}%`,
+                          top: `${pt.dotPos!.y}%`,
+                        }}
+                        onMouseEnter={() => setHoveredPoint(pt.id)}
+                        onMouseLeave={() => setHoveredPoint(null)}
+                      >
+                        <div
+                          className={`h-7 w-20 rounded-full transition-all duration-200 ${
+                            isHovered
+                              ? 'ring-2 ring-purple-400 bg-purple-500/25 shadow-[0_0_15px_rgba(168,85,247,0.5)] scale-110'
+                              : 'hover:bg-white/10'
+                          }`}
+                        />
+                      </div>
+                    );
+                  }
+
+                  // For custom uploaded photos, render the full dynamic pins and badges
                   return (
                     <div
                       key={pt.id}
-                      className="absolute transition-transform duration-300 cursor-pointer"
+                      className="absolute transition-transform duration-300 cursor-pointer z-10"
                       style={{
                         left: `${pt.dotPos!.x}%`,
                         top: `${pt.dotPos!.y}%`,
@@ -263,11 +291,8 @@ export default function SkinAnalysis() {
                       onMouseLeave={() => setHoveredPoint(null)}
                     >
                       <div className="relative flex items-center">
-                        {/* Glowing ring */}
                         <div className={`absolute -inset-1.5 rounded-full border border-zinc-400/50 ${isHovered ? 'scale-125 border-purple-400 bg-purple-500/30' : 'animate-pulse'}`} />
                         <div className={`h-2.5 w-2.5 rounded-full border border-white shadow-md ${isHovered ? 'bg-purple-300' : 'bg-zinc-200/90'}`} />
-
-                        {/* Label Badge */}
                         <div className={`ml-2 whitespace-nowrap rounded-full px-2.5 py-0.5 text-[10px] sm:text-[11px] font-medium border shadow-lg backdrop-blur-md transition-all ${
                           isHovered
                             ? 'bg-purple-900/90 border-purple-400 text-white scale-105'
@@ -283,10 +308,35 @@ export default function SkinAnalysis() {
                 {/* Extra Point: Radiance */}
                 {EXTRA_POINTS.map((pt) => {
                   const isHovered = hoveredPoint === pt.id;
+                  const isDefaultPhoto = selectedPhoto.includes('analyzed');
+
+                  if (isDefaultPhoto) {
+                    return (
+                      <div
+                        key={pt.id}
+                        className="absolute cursor-pointer z-10 -translate-x-1/2 -translate-y-1/2"
+                        style={{
+                          left: `${pt.x}%`,
+                          top: `${pt.y}%`,
+                        }}
+                        onMouseEnter={() => setHoveredPoint(pt.id)}
+                        onMouseLeave={() => setHoveredPoint(null)}
+                      >
+                        <div
+                          className={`h-7 w-20 rounded-full transition-all duration-200 ${
+                            isHovered
+                              ? 'ring-2 ring-purple-400 bg-purple-500/25 shadow-[0_0_15px_rgba(168,85,247,0.5)] scale-110'
+                              : 'hover:bg-white/10'
+                          }`}
+                        />
+                      </div>
+                    );
+                  }
+
                   return (
                     <div
                       key={pt.id}
-                      className="absolute transition-transform duration-300 cursor-pointer"
+                      className="absolute transition-transform duration-300 cursor-pointer z-10"
                       style={{
                         left: `${pt.x}%`,
                         top: `${pt.y}%`,
@@ -310,19 +360,21 @@ export default function SkinAnalysis() {
                   );
                 })}
 
-                {/* Bottom Overlay Status Bar inside Photo */}
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 py-3 text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <span className="font-sans text-[11px] font-medium text-zinc-200">
-                      {isScanning ? `Analyzing photo... ${Math.round(scanProgress)}%` : 'Uploaded photo analyzed'}
-                    </span>
+                {/* Bottom Overlay Status Bar - for custom photos or when scanning */}
+                {(!selectedPhoto.includes('analyzed') || isScanning) && (
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 py-3 text-xs z-20">
+                    <div className="flex items-center gap-2">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      </span>
+                      <span className="font-sans text-[11px] font-medium text-zinc-200">
+                        {isScanning ? `Analyzing photo... ${Math.round(scanProgress)}%` : 'Uploaded photo analyzed'}
+                      </span>
+                    </div>
+                    <span className="font-mono text-[11px] text-zinc-400">{activeTime}</span>
                   </div>
-                  <span className="font-mono text-[11px] text-zinc-400">{activeTime}</span>
-                </div>
+                )}
               </div>
 
               {/* Action Buttons Below Photo */}

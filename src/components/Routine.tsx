@@ -119,17 +119,39 @@ export default function Routine() {
                 }}
               >
                 {/* Card header */}
-                <div className="flex items-center gap-3 mb-8">
-                  <div
-                    className="flex h-8 w-8 items-center justify-center rounded-full"
-                    style={{
-                      background: isMorning ? 'rgba(255,200,120,0.25)' : 'rgba(160,160,220,0.25)',
-                    }}
-                  >
-                    {isMorning
-                      ? <Sun className="h-4 w-4 text-[#d4943a]" />
-                      : <Moon className="h-4 w-4 text-[#7c80c2]" />
-                    }
+                <div className="flex items-center gap-4 mb-8">
+                  {/* Animated icon */}
+                  <div className="relative flex-shrink-0">
+                    {/* Glow ring */}
+                    <div
+                      className="absolute rounded-full pointer-events-none"
+                      style={{
+                        inset: '-6px',
+                        background: isMorning
+                          ? 'radial-gradient(circle, #fbbf2460 0%, #f9731640 60%, transparent 100%)'
+                          : 'radial-gradient(circle, #c4b5fd60 0%, #818cf840 60%, transparent 100%)',
+                        animation: isMorning
+                          ? 'glowPulse 3s ease-in-out infinite'
+                          : 'glowPulseMoon 4s ease-in-out infinite',
+                      }}
+                    />
+                    {/* Icon circle */}
+                    <div
+                      className="relative flex h-10 w-10 items-center justify-center rounded-full shadow-md"
+                      style={{
+                        background: isMorning
+                          ? 'linear-gradient(135deg, #fde68a, #f97316)'
+                          : 'linear-gradient(135deg, #ddd6fe, #6366f1)',
+                        animation: isMorning
+                          ? 'floatSun 4s ease-in-out infinite'
+                          : 'floatMoon 5s ease-in-out infinite',
+                      }}
+                    >
+                      {isMorning
+                        ? <Sun className="h-5 w-5 text-white drop-shadow-sm" />
+                        : <Moon className="h-5 w-5 text-white drop-shadow-sm" />
+                      }
+                    </div>
                   </div>
                   <div>
                     <p className="font-sans text-[0.6rem] uppercase tracking-[0.18em] text-[#9e8880]">{routine.period}</p>

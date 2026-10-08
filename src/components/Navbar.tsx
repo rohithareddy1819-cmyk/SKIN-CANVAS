@@ -24,11 +24,11 @@ export default function Navbar() {
 
   return (
     <>
-      <header
+        <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-md py-3'
-            : 'bg-white/80 backdrop-blur-md shadow-sm py-4'
+            ? 'bg-white/95 backdrop-blur-xl shadow-md shadow-pink-100/50 py-3'
+            : 'bg-white/80 backdrop-blur-md shadow-sm shadow-pink-50 py-4'
         }`}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12">
@@ -48,7 +48,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="relative font-sans text-base font-semibold text-charcoal-700 transition-colors duration-200 hover:text-[#b97379] after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-[#b97379] after:transition-all after:duration-300 hover:after:w-full"
+                className="relative font-sans text-base font-semibold text-[#5E3F52] transition-colors duration-200 hover:text-[#f06292] after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-gradient-to-r after:from-[#f06292] after:to-[#e91e8c] after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.label}
               </a>
@@ -59,12 +59,17 @@ export default function Navbar() {
           <div className="hidden items-center lg:flex">
             <a
               href="#analysis"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#302625] px-8 py-3.5 font-sans text-base font-semibold text-white shadow-lg shadow-[#6e4a4a]/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#453534] hover:shadow-xl active:scale-95"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-sans text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:scale-95"
+              style={{
+                background: 'linear-gradient(135deg, #f06292, #e91e8c, #c2185b)',
+                boxShadow: '0 4px 20px rgba(240,98,146,0.4)',
+              }}
             >
-              <Sparkles className="h-5 w-5 transition-transform group-hover:rotate-12" />
+              <Sparkles className="h-5 w-5" />
               Analyze My Skin
             </a>
           </div>
+
 
           {/* Mobile hamburger */}
           <button

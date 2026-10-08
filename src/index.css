@@ -36,8 +36,8 @@
   50%      { opacity: 1;   transform: scale(1.2) rotate(180deg); }
 }
 @keyframes shimmer {
-  0%   { backgroundPosition: '-200% 0'; }
-  100% { backgroundPosition: '200% 0';  }
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0;  }
 }
 @keyframes fadeUp {
   0%   { opacity: 0; transform: translateY(32px); }

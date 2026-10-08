@@ -7,26 +7,100 @@ export default function Routine() {
 
   return (
     <section id="routine" className="relative bg-[#fdf6f2] py-20 lg:py-32 overflow-hidden">
+      {/* Keyframe animations */}
+      <style>{`
+        @keyframes floatSun {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          30% { transform: translateY(-12px) rotate(15deg); }
+          60% { transform: translateY(-6px) rotate(-8deg); }
+        }
+        @keyframes floatMoon {
+          0%, 100% { transform: translateY(0px) rotate(-10deg); }
+          40% { transform: translateY(-14px) rotate(8deg); }
+          70% { transform: translateY(-5px) rotate(-15deg); }
+        }
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.7; filter: blur(10px) brightness(1); }
+          50% { opacity: 1; filter: blur(14px) brightness(1.3); }
+        }
+        @keyframes glowPulseMoon {
+          0%, 100% { opacity: 0.5; filter: blur(10px) brightness(1); }
+          50% { opacity: 0.9; filter: blur(16px) brightness(1.25); }
+        }
+      `}</style>
       <div ref={ref} className="relative mx-auto max-w-7xl px-6 lg:px-10">
 
         {/* Header */}
-        <div className={`reveal ${visible ? 'is-visible' : ''} mb-12`}>
+        <div className={`reveal ${visible ? 'is-visible' : ''} mb-12 relative`}>
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px w-8 bg-[#c9b8b0]" />
             <p className="font-sans text-[0.65rem] uppercase tracking-[0.18em] text-[#9e8880]">Personalized Routine</p>
           </div>
-          <h2
-            style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
-            className="text-[3.2rem] sm:text-[4rem] lg:text-[5rem] font-bold text-[#1e1310] leading-[0.92] tracking-tight"
-          >
-            BUILT AROUND<br />
-            <span
-              style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
-              className="italic font-normal text-[#6b7a52]"
+
+          {/* Heading with floating icons */}
+          <div className="relative inline-block">
+
+            {/* Animated Sun — left of heading */}
+            <div
+              className="absolute -left-2 top-2 lg:-left-10 lg:top-4"
+              style={{ animation: 'floatSun 4s ease-in-out infinite' }}
             >
-              YOUR SKIN.
-            </span>
-          </h2>
+              {/* Glow */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, #fbbf24 0%, #f97316 60%, transparent 100%)',
+                  width: '44px',
+                  height: '44px',
+                  top: '-6px',
+                  left: '-6px',
+                  animation: 'glowPulse 3s ease-in-out infinite',
+                }}
+              />
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full"
+                style={{ background: 'linear-gradient(135deg, #fde68a, #f97316)' }}
+              >
+                <Sun className="h-4 w-4 text-white drop-shadow-sm" />
+              </div>
+            </div>
+
+            {/* Animated Moon — right of heading */}
+            <div
+              className="absolute -right-8 top-0 lg:-right-14 lg:top-2"
+              style={{ animation: 'floatMoon 5s ease-in-out infinite' }}
+            >
+              {/* Glow */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, #c4b5fd 0%, #818cf8 60%, transparent 100%)',
+                  width: '44px',
+                  height: '44px',
+                  top: '-6px',
+                  left: '-6px',
+                  animation: 'glowPulseMoon 4s ease-in-out infinite',
+                }}
+              />
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full"
+                style={{ background: 'linear-gradient(135deg, #c4b5fd, #6366f1)' }}
+              >
+                <Moon className="h-4 w-4 text-white drop-shadow-sm" />
+              </div>
+            </div>
+
+            <h2
+              style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+              className="text-[3.2rem] sm:text-[4rem] lg:text-[5rem] font-bold text-[#1e1310] leading-[0.92] tracking-tight pl-10 lg:pl-0"
+            >
+              BUILT AROUND<br />
+              <span
+                style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+                className="italic font-normal text-[#6b7a52]"
+              >
+                YOUR SKIN.
+              </span>
+            </h2>
+          </div>
         </div>
 
         {/* Cards */}
